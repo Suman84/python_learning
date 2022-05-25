@@ -1,6 +1,15 @@
 #skins=[[0]*3]*6
 #for norse collection only
-skins = [[10000, 10000, 10000],[2000, 2000, 2000], [600, 500, 300], [250, 100, 100], [30, 20, 15],  [4, 4, 4]]
+
+
+
+skins = [[10000, 10000, 10000],
+    [2000, 2000, 2000],
+    [600, 500, 300],
+    [250, 100, 100],
+    [30, 20, 15],
+    [4, 4, 4]]
+skins[2][2] = 1000
 print(skins)
 choosen_skins_rarity = input('choose skins\nplease enter rarity(1-6) 1 being highest:')
 choosen_skins_rank = input('please enter rank(1-3) 1 being highest:')
