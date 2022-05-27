@@ -59,7 +59,18 @@ no_of_skins = [[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1
                [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]]
-set_name = ['inferno', 'inferno_2','dust_2', 'dust_2_2021','mirage_2021','train_2021','vertigo_2021','op10_ancient','assault', 'norse']
+#community_4 = breakout, community_7 = chroma2, community_12 = chroma3, community_6 = chroma, community_19 = clutch
+#com24 = cs20, community_21 = danger zone, community_30 = dreamsAndNightmare, community_8 = falcion, community_13 = gamma
+#community_15 = glove, community_20 = horizon, community_3 = huntsman,community_27 = brokenfang,community_17 = op hydra
+#commu_29 = riptide, 2 = phoenix, 25 =prisma2, 22 =prisma,10 =revolver, 9 =shadow, 23 = shattered web, 28 =snakebite
+#kimono = rising sun, 18 = spectrum2, 16=spectrum, 5= vanguard,11=wildfire, 1 = winteroffensive
+set_name = ['inferno','nuke', 'inferno_2','dust_2', 'dust_2_2021','mirage_2021','train_2021','vertigo_2021','op10_ancient','assault','aztect','baggage',
+            'bank','bravo_i','community_4','cache','canals','chopshop','community_7','community_12','community_6','community_19',
+            'cobblestone','op10_ct','community_24','community_21','community_30','dust','esports','esports_ii','esports_iii',
+            'community_8','gamma_2','community_13','community_15','gods_and_monsters', 'op10_t','community_20','community_3',
+            'italy','lake','militia','mirage','office','community_27','community_17','community_29','overpass','community_2',
+            'community_25','community_22','community_10','kimono','safehouse','community_9','community_23','community_28',
+            'community_18','community_16','stmarc','train','community_5','vertigo','community_11','community_1','norse']
 wear_category = [4, 3, 2, 1, 0]
 exterior = 'normal'
 rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
@@ -67,6 +78,9 @@ rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
 
 def extract_values():
     for k in range(0, 10):
+        file = open('skin_prices.txt', 'a+')
+        file.write("Collection=" + set_name[k])
+        file.write("\n\n")
         for j in range(0, 5):
             for i in range(0, 6):
                 link = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
@@ -94,11 +108,13 @@ def extract_values():
                     else:
                         item_priceinfloat = item_price[1:8]
                     skins_price[k][i][counter][j] = float(item_priceinfloat)
-                    no_of_skins[k][i] = counter + 1
                     print('set-name=' + set_name[k])
                     print('counter=' + str(counter) + 'and i=' + str(i))
                     print(skins_price)
                     print(item_priceinfloat)
+                    file = open('skin_prices.txt', 'a+')
+                    file.write("Wear=" + str(wear_category[j]) + " Rarity= " + str(rarity[i]) + "\t#")
+                    file.write(item_name +' = '+item_price + "\n")
                 print('waiting for 20 sec so that steam wont ban')
                 time.sleep(20)
 
@@ -124,7 +140,6 @@ def testing_possibilities():
                         no_of_skins[l][k + 1]:
                         if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
                             print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-")
-
                             print((skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] +
                                    skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / no_of_skins[l][k + 1])
                             print("found! value of input-")
@@ -133,8 +148,8 @@ def testing_possibilities():
                             print()
 
 
-#extract_values()
-testing_possibilities()
+extract_values()
+#testing_possibilities()
 print("final value =")
 print(skins_price)
 print(no_of_skins)

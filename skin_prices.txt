@@ -1,0 +1,10 @@
+Collection=inferno
+ Wear=4 Rarity= Common Nova_|_Walnut_(Battle-Scarred) = $0.81 USD
+ Wear=4 Rarity= Common MAG-7_|_Sand_Dune_(Battle-Scarred) = $0.53 USD
+ Wear=4 Rarity= Uncommon M4A4_|_Tornado_(Battle-Scarred) = $1.44 USD
+ Wear=4 Rarity= Uncommon P250_|_Gunsmoke_(Battle-Scarred) = $0.68 USD
+ Wear=4 Rarity= Rare Tec-9_|_Brass_(Battle-Scarred) = $0.60 USD
+Collection=inferno
+
+Wear=4 Rarity= Common	#Nova_|_Walnut_(Battle-Scarred) = $0.80 USD
+Wear=4 Rarity= Common	#MAG-7_|_Sand_Dune_(Battle-Scarred) = $0.53 USD
