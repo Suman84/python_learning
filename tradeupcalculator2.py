@@ -122,14 +122,15 @@ def testing_possibilities():
                         skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] +
                         skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / \
                         no_of_skins[l][k + 1]:
-                        print("found! value of output-")
-                        print((skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] +
-                        skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / \
-                        no_of_skins[l][k + 1])
-                        print("found! value of input-")
-                        print(skins_price[l][k][j][i] * 5 + skins_price[l][k][j][i] * 5)
-                        print(no_of_skins[l][k + 1])
-                        print("l=" + str(l) + " k=" + str(k) + " j=" + str(j)+ " i=" + str(i))
+                        if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
+                            print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-")
+
+                            print((skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] +
+                                   skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / no_of_skins[l][k + 1])
+                            print("found! value of input-")
+                            print(skins_price[l][k][j][i] * 5 + skins_price[l][k][j][i] * 5)
+                            print(no_of_skins[l][k + 1])
+                            print()
 
 
 #extract_values()
