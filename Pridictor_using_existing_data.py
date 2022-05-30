@@ -215,7 +215,7 @@ def testing_possibilities_same_collection():
                             print(index)
                             if index != -1:
                                 gun_name1 = all_data[all_data.find('#', index) + 1:all_data.find('$', index) +5]
-                                print("10 x " + gun_name1)
+                                print( gun_name1 + "x10")
 
                     if input2wear*1.2 < output2:
                         if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
@@ -236,7 +236,6 @@ def testing_possibilities_same_collection():
                             index2 = all_data.find(to_be_filtered2)
                             if index1 != -1 and index2 != -1:
                                 gun_name1 = all_data[all_data.find('#', index1) + 1:all_data.find('$', index1) +5]
-
                                 gun_name2 = all_data[all_data.find('#', index2) + 1:all_data.find('$', index2) +5]
                                 print(gun_name1 +"x5 and "+ gun_name2 + "x5")
 
