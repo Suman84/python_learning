@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+import re
 # 70 -collection(actually 67),8-number of skins, 6-rarity, 5-wear
-skins_price = [[[[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
+skins_price = [[[[0.0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
                [[[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
                [[[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
                [[[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]], [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
@@ -131,79 +132,6 @@ wear_category = [4, 3, 2, 1, 0]
 exterior = 'normal'
 rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
 
-
-def extract_values():
-    for k in range(20, 70):
-        file = open('skin_prices.txt', 'a+')
-        file.write("Collection=" + set_name[k])
-        file.write("\n\n")
-        for j in range(0, 5):
-            for i in range(0, 6):
-                link = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
-                       'tag_set_' + set_name[k] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=any&category_730_TournamentTeam%5B%5D=' \
-                                'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
-                                'tag_WearCategory' + str(wear_category[j]) + '&category_730_Quality%5B%5D=' \
-                                'tag_normal&category_730_Rarity%5B%5D=' \
-                                'tag_Rarity_' + rarity[i] + '_Weapon&appid=730'
-                user_agent = user_agent_list[i+j]
-                headers = {'User-Agent': user_agent}
-                html_text = requests.get(link, headers= headers).text
-                soup = BeautifulSoup(html_text, 'html.parser')
-                items = soup.find_all('div',class_="market_listing_row market_recent_listing_row market_listing_searchresult")
-                counter = -1
-                for item in items:
-                    item_name = item.find('span', class_='market_listing_item_name').text.replace(" ", "_").replace("龍王","")
-                    item_price = item.find('span', class_='sale_price').text.replace(",", "")
-                    counter = counter + 1
-                    item_priceinfloat = item_price[1:5]
-                    print(item_name + ' = ' + item_price)
-                    if float(item_priceinfloat) < 10:
-                        item_priceinfloat = item_price[1:5]
-                    elif float(item_priceinfloat) < 100:
-                        item_priceinfloat = item_price[1:6]
-                    elif float(item_priceinfloat) < 1000:
-                        item_priceinfloat = item_price[1:7]
-                    else:
-                        item_priceinfloat = item_price[1:8]
-                    skins_price[k][i][counter][j] = float(item_priceinfloat)
-                    #print('set-name=' + set_name[k])
-                    #print('counter=' + str(counter) + 'and i=' + str(i))
-                    #print(skins_price)
-                    print(item_priceinfloat)
-                    file = open('skin_prices.txt', 'a+')
-                    file.write("Wear=" + str(wear_category[j]) + " Rarity= " + str(rarity[i]) + "\t#")
-                    file.write(item_name +' = '+item_price + "\n")
-                print('waiting for 30 sec so that steam wont ban')
-                time.sleep(15)
-
-
-def testing_possibilities_same_collection():
-    for l in range(0, 68):
-        for k in range(0, 5):
-            for j in range(0, 6):
-                for i in range(0, 4):
-                    count2 = 1
-                    for m in range(0,5):
-                        if skins_price[l][k + 1][m+1][i] != 0:
-                            count2 = count2 +1
-                    no_of_skins[l][k + 1] = count2
-                    input1wear = skins_price[l][k][j][i]*10
-                    input2wear = skins_price[l][k][j][i]*5 + skins_price[l][k][j][i+1]*5
-                    output = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) /no_of_skins[l][k + 1]
-
-                    if input1wear < output:
-                        if skins_price[l][k][j][i] !=0 :
-                            print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-" + str(output))
-                            print("\ninput(all same)-" + str(input1wear))
-                            #print(no_of_skins[l][k + 1])
-                    if input2wear < output:
-                        if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
-                            print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-" + str(output))
-                            print("\ninput(2wearmix)-" + str(input2wear))
-                            #print(no_of_skins[l][k + 1])
-
-
-
 def testing_possibilities_different_collection():
     for n in range(0,68):
         for m in range(0,68-n):
@@ -217,30 +145,69 @@ def testing_possibilities_different_collection():
                                     count2 = count2 + 1
                             no_of_skins[l][k + 1] = count2
                             input1wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i] * 5
-                            input2wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i + 1] * 5
-                            input3wear = skins_price[m + n][k][j][i+1] * 5 + skins_price[l + m + n][k][j][i] * 5
-                            output = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] +
-                                      skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] +
-                                      skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / no_of_skins[l][k + 1]
+                            #input2wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i + 1] * 5
+                            #input3wear = skins_price[m + n][k][j][i+1] * 5 + skins_price[l + m + n][k][j][i] * 5
+                            output1 = (skins_price[m + n][k + 1][0][i] + skins_price[m + n][k + 1][1][i] +
+                                      skins_price[m + n][k + 1][2][i] + skins_price[m + n][k + 1][3][i] +
+                                      skins_price[m + n][k + 1][4][i] + skins_price[m + n][k + 1][5][i] +
+                                      skins_price[m + n][k + 1][6][i] + skins_price[m + n][k + 1][7][i])
+                            output2 = (skins_price[l+m+n][k + 1][0][i] + skins_price[l+m+n][k + 1][1][i] +
+                                      skins_price[l+m+n][k + 1][2][i] + skins_price[l+m+n][k + 1][3][i] +
+                                      skins_price[l+m+n][k + 1][4][i] + skins_price[l+m+n][k + 1][5][i] +
+                                      skins_price[l+m+n][k + 1][6][i] + skins_price[l+m+n][k + 1][7][i])
+                            trueoutput = (output1 + output2)/(no_of_skins[m + n][k + 1] + no_of_skins[l +m + n][k + 1])
 
-                            if input1wear < output:
-                                if skins_price[l][k][j][i] != 0 and skins_price[l][k][j][i + 1] != 0:
+                            if input1wear < trueoutput and no_of_skins[m + n][k + 1] != 1 and no_of_skins[l + m + n][k + 1] !=1:
+                                if skins_price[m + n][k][j][i] != 0 and skins_price[l+m+n][k][j][i] != 0:
                                     print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(
-                                        i) + " value of output-" + str(output))
+                                        i) + " value of output-" + str(trueoutput))
                                     print("\ninput(all same)-" + str(input1wear))
                                     # print(no_of_skins[l][k + 1])
-                            if input2wear < output:
-                                if skins_price[l][k][j][i] != 0 and skins_price[l][k][j][i + 1] != 0:
-                                    print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(
-                                        i) + " value of output-" + str(output))
-                                    print("\ninput(2wearmix)-" + str(input2wear))
-                                    # print(no_of_skins[l][k + 1])
 
+def get_prices_from_file():
+    file2 = open('skin_prices.txt', 'r')
+    all_lines = file2.readlines()
+    #Getting all prices from collection
 
-extract_values()
-#testing_possibilities_same_collection()
-print("final value =")
+    for l in range(0, 10):
+        index1, index2, all_data = 0, 0, ''
+        for f2 in all_lines:
+            index1 = index1 + 1
+            if f2 == 'Collection=' + set_name[l] + '\n':
+                print('starts at ' + str(index1) + f2)
+                break
+        for f2 in all_lines:
+            index2 = index2 + 1
+            if f2 == 'Collection=' + " " +  set_name[l+1] + '\n':
+                print('ends at ' + str(index2) + f2)
+                break
+        for idk in range(index1, index2):
+            all_data = all_data + all_lines[idk]
+        print(all_data)
+        #print('length=' + str(len(value)))
+        for k in range(0, 6):
+            for i in range(0, 5):
+                to_be_filtered = 'Wear=' + str(wear_category[i]) + ' Rarity= ' + rarity[k]
+                #to_be_filtered = 'Wear=4 Rarity= Common'
+                print('Collection=' + set_name[l] + to_be_filtered)
+                value = [m.start() for m in re.finditer(to_be_filtered, all_data)]
+                #if len(value) != 0:
+                print(value)
+                print("length=" + str(len(value)) + " l=" + str(l))
+                #print(value)
+                for j in range(0, len(value)):
+                    start_from = int(all_data.find('$',value[j]))
+                    #print(all_data[value[0]:value[0] + 50])
+                    #print(all_data[value[1]:value[1] + 50])
+                    print(str(l) +","+ str(k) + "," + str(j) + "," + str(i) +"," + all_data[start_from + 1:start_from + 6])
+                    if float(all_data[start_from + 1:start_from + 6]) > 1000:
+                        skins_price[l][k][j][i] =  float(all_data[start_from + 1:start_from + 7])
+                    else:
+                        skins_price[l][k][j][i] = float(all_data[start_from + 1:start_from + 6])
+                    print(all_data[start_from + 1:start_from + 6])
+                    print(skins_price)
+    file2.close()
+
+get_prices_from_file()
+
 print(skins_price)
-print(no_of_skins)
-file = open('files\skin_prices.txt', 'a+')
-file.write(str(skins_price))
