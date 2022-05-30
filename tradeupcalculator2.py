@@ -128,15 +128,15 @@ set_name = ['inferno','nuke', 'inferno_2','dust_2', 'dust_2_2021','mirage_2021',
             'community_25','community_22','community_10','kimono','safehouse','community_9','community_23','community_28',
             'community_18','community_16','stmarc','train','community_5','vertigo','community_11','community_1','norse','aztec']
 wear_category = [4, 3, 2, 1, 0]
+wear_name = ["BS","WW","FT","MW","FN"]
 exterior = 'normal'
 rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
+rarity_real = ['consumer','milspec','industrial','restricted','classified','covert']
 
 
 def extract_values():
-    for k in range(20, 70):
+    for k in range(38, 70):
         file = open('skin_prices.txt', 'a+')
-        file.write("Collection=" + set_name[k])
-        file.write("\n\n")
         for j in range(0, 5):
             for i in range(0, 6):
                 link = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
@@ -152,9 +152,11 @@ def extract_values():
                 items = soup.find_all('div',class_="market_listing_row market_recent_listing_row market_listing_searchresult")
                 counter = -1
                 for item in items:
-                    item_name = item.find('span', class_='market_listing_item_name').text.replace(" ", "_").replace("龍王","")
+                    item_name = item.find('span', class_='market_listing_item_name').text.replace(" ", "_").replace("龍王","").replace('弐','')
                     item_price = item.find('span', class_='sale_price').text.replace(",", "")
                     counter = counter + 1
+                    if counter == 8:
+                        break
                     item_priceinfloat = item_price[1:5]
                     print(item_name + ' = ' + item_price)
                     if float(item_priceinfloat) < 10:
@@ -171,9 +173,9 @@ def extract_values():
                     #print(skins_price)
                     print(item_priceinfloat)
                     file = open('skin_prices.txt', 'a+')
-                    file.write("Wear=" + str(wear_category[j]) + " Rarity= " + str(rarity[i]) + "\t#")
+                    file.write("Collection=" + set_name[k] +", Wear=" + wear_name[j] + ", Rarity= " + rarity_real[i] +", SN=" + str(counter) +"\t#")
                     file.write(item_name +' = '+item_price + "\n")
-                print('waiting for 30 sec so that steam wont ban')
+                print('waiting for 15 sec so that steam wont ban')
                 time.sleep(15)
 
 
