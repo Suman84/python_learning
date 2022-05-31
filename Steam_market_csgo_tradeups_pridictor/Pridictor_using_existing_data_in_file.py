@@ -136,7 +136,8 @@ wear_category = [4, 3, 2, 1, 0]
 wear_name = ['BS','WW','FT','MW','FN']
 exterior = 'normal'
 rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
-rarity_real = ['consumer','industrial','milspec','restricted','classified','covert']
+#accidently exchanged position of milspec and industrial but should work
+rarity_real = ['consumer','milspec','industrial','restricted','classified','covert']
 
 def testing_possibilities_different_collection():
     total_collection = 50
@@ -166,9 +167,35 @@ def testing_possibilities_different_collection():
                 for k in range(0, 5):
                     for j in range(0, 7):
                         for i in range(0, 4):
+                            link_for_input1 = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
+                                              'tag_set_' + set_name[m+n] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=' \
+                                                       'any&category_730_TournamentTeam%5B%5D=' \
+                                                       'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
+                                                       'tag_WearCategory' + str(wear_category[i]) + '&category_730_Quality%5B%5D=' \
+                                                    'tag_normal&category_730_Rarity%5B%5D=' \
+                                                    'tag_Rarity_' + rarity[k] + '_Weapon&appid=730'
+                            link_for_input2 = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
+                                              'tag_set_' + set_name[l+m+n] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=' \
+                                                       'any&category_730_TournamentTeam%5B%5D=' \
+                                                       'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
+                                                       'tag_WearCategory' + str(wear_category[i]) + '&category_730_Quality%5B%5D=' \
+                                                        'tag_normal&category_730_Rarity%5B%5D=' \
+                                                        'tag_Rarity_' + rarity[k] + '_Weapon&appid=730'
+                            link_for_output1 = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
+                                               'tag_set_' + set_name[m+n] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=' \
+                                                        'any&category_730_TournamentTeam%5B%5D=' \
+                                                        'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
+                                                        'tag_WearCategory' + str(wear_category[i]) + '&category_730_Quality%5B%5D=' \
+                                                    'tag_normal&category_730_Rarity%5B%5D=' \
+                                                    'tag_Rarity_' + rarity[k + 1] + '_Weapon&appid=730'
+                            link_for_output2 = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
+                                               'tag_set_' + set_name[l+m+n] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=' \
+                                                        'any&category_730_TournamentTeam%5B%5D=' \
+                                                        'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
+                                                        'tag_WearCategory' + str(wear_category[i]) + '&category_730_Quality%5B%5D=' \
+                                                    'tag_normal&category_730_Rarity%5B%5D=' \
+                                                    'tag_Rarity_' + rarity[k + 1] + '_Weapon&appid=730'
                             input1wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i] * 5
-                            input2wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i + 1] * 5
-                            input3wear = skins_price[m + n][k][j][i+1] * 5 + skins_price[l + m + n][k][j][i] * 5
                             output1 = (skins_price[m + n][k + 1][0][i] + skins_price[m + n][k + 1][1][i] +
                                       skins_price[m + n][k + 1][2][i] + skins_price[m + n][k + 1][3][i] +
                                       skins_price[m + n][k + 1][4][i] + skins_price[m + n][k + 1][5][i] +
@@ -177,22 +204,12 @@ def testing_possibilities_different_collection():
                                       skins_price[l+m+n][k + 1][2][i] + skins_price[l+m+n][k + 1][3][i] +
                                       skins_price[l+m+n][k + 1][4][i] + skins_price[l+m+n][k + 1][5][i] +
                                       skins_price[l+m+n][k + 1][6][i] + skins_price[l+m+n][k + 1][7][i])
-                            output3 = (skins_price[m + n][k + 1][0][i+1] + skins_price[m + n][k + 1][1][i+1] +
-                                       skins_price[m + n][k + 1][2][i+1] + skins_price[m + n][k + 1][3][i+1] +
-                                       skins_price[m + n][k + 1][4][i+1] + skins_price[m + n][k + 1][5][i+1] +
-                                       skins_price[m + n][k + 1][6][i+1] + skins_price[m + n][k + 1][7][i+1])
-                            output4 = (skins_price[l + m + n][k + 1][0][i+1] + skins_price[l + m + n][k + 1][1][i+1] +
-                                       skins_price[l + m + n][k + 1][2][i+1] + skins_price[l + m + n][k + 1][3][i+1] +
-                                       skins_price[l + m + n][k + 1][4][i+1] + skins_price[l + m + n][k + 1][5][i+1] +
-                                       skins_price[l + m + n][k + 1][6][i+1] + skins_price[l + m + n][k + 1][7][i+1])
                             count3 = 1
                             for m2 in range(0, 7):
-                                if skins_price[l+m+n][k + 1][m2 + 1][i] != 0:
+                                if skins_price[l+m+n][k + 1][m2 + 1][i] > 0:
                                     count3 = count3 + 1
                             no_of_skins[l+m+n][k + 1] = count3
-
                             trueoutput = (output1 + output2)/(no_of_skins[m + n][k + 1] + no_of_skins[l +m + n][k + 1])
-
                             if input1wear*margin < trueoutput and skins_price[m + n][k + 1][0][i] != 0 and skins_price[l+m+n][k + 1][0][i] !=0:
                                 if skins_price[m + n][k][j][i] != 0 and skins_price[l+m+n][k][j][i] != 0 and input1wear < maxinput: #input
                                     print("\nfound at setname=" + set_name[m+n] +" and " + set_name[l+m+n]+ ". rarity=" + rarity_real[k] + " no=" + str(j+1)
@@ -207,15 +224,23 @@ def testing_possibilities_different_collection():
                                     index1 = all_data.find(to_be_filtered1)
                                     index2 = all_data.find(to_be_filtered2)
                                     if index1 != -1 and index2 != -1:
-                                        gun_name1 = all_data[
-                                                    all_data.find('#', index1) + 1:all_data.find('$', index1) + 5]
-                                        gun_name2 = all_data[
-                                                    all_data.find('#', index2) + 1:all_data.find('$', index2) + 5]
+                                        gun_name1 = all_data[all_data.find('#', index1) + 1:all_data.find('$', index1) + 5]
+                                        gun_name2 = all_data[all_data.find('#', index2) + 1:all_data.find('$', index2) + 5]
                                         print(gun_name1 + "x5 and " + gun_name2 + "x5")
                                     print("Total input(wear same):" + str(input1wear))
                                     print("Avg value of output:" + str(trueoutput))
                                     print("Average Gain = " + str(((trueoutput / input1wear) - 1 )*100)  + "%")
+                                    print("link for input1 for skin --" + gun_name1)
+                                    print(link_for_input1)
+                                    print("link for input2 for skin --" + gun_name2)
+                                    print(link_for_input2)
+                                    print("link for output:")
+                                    print(link_for_output1)
+                                    print("link for output:")
+                                    print(link_for_output2)
     print("total found=" + str(totalfound))
+    if totalfound == 0:
+        print("try increasing input or decreasing margin :)")
 
 
 def testing_possibilities_same_collection():
@@ -243,7 +268,7 @@ def testing_possibilities_same_collection():
                     input1wear = skins_price[l][k][j][i]*10
                     input2wear = skins_price[l][k][j][i]*5 + skins_price[l][k][j][i+1]*5
                     output11 = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i] + skins_price[l][k + 1][6][i] + skins_price[l][k + 1][7][i]) /no_of_skins[l][k + 1]
-                    output22 = (skins_price[l][k + 1][0][i+1] + skins_price[l][k + 1][1][i+1] + skins_price[l][k + 1][2][i+1] +skins_price[l][k + 1][3][i+1] + skins_price[l][k + 1][4][i+1] + skins_price[l][k + 1][5][i+1] + skins_price[l][k + 1][6][i] + skins_price[l][k + 1][7][i]) / no_of_skins[l][k + 1]
+                    output22 = (skins_price[l][k + 1][0][i+1] + skins_price[l][k + 1][1][i+1] + skins_price[l][k + 1][2][i+1] +skins_price[l][k + 1][3][i+1] + skins_price[l][k + 1][4][i+1] + skins_price[l][k + 1][5][i+1] + skins_price[l][k + 1][6][i+1] + skins_price[l][k + 1][7][i+1]) / no_of_skins[l][k + 1]
                     link_for_input1 = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
                        'tag_set_' + set_name[l] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=' \
                                 'any&category_730_TournamentTeam%5B%5D=' \
@@ -292,7 +317,7 @@ def testing_possibilities_same_collection():
 
                     if input2wear*margin < output22 and input2wear < maxinput:
                         if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
-                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + "Avg value of output:" + str(output22))
+                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + " Avg value of output:" + str(output22))
                             print("input(2wearmix):" + str(input2wear))
                             print("Average Gain = " + str(((output22 / input2wear) - 1) * 100) + "%")
                             #print(no_of_skins[l][k + 1])
@@ -384,17 +409,20 @@ def get_prices_from_file_new():
 
 print("Extracting prices stored in file....")
 get_prices_from_file_new()
-valuesord = input("press 's' for same collection input and 'd' for 2 diff collection input:")
-print(valuesord)
-if valuesord == 's' or valuesord == 'S':
-    print("for same collection")
-    testing_possibilities_same_collection()
+testing_possibilities_different_collection()
+print("If output skins lack any wear, the calculation will change so double check math yourself!")
+
+#valuesord = input("press 's' for same collection input and 'd' for 2 diff collection input:")
+#print(valuesord)
+#if valuesord == 's' or valuesord == 'S':
+    #print("for same collection")
+    #testing_possibilities_same_collection()
     #print(skins_price)
-    print("If output skins lack any wear, the calculation will change so double check math yourself!")
-elif valuesord == 'd' or valuesord =='D':
-    print("for diff collection")
-    testing_possibilities_different_collection()
+    #print("If output skins lack any wear, the calculation will change so double check math yourself!")
+#elif valuesord == 'd' or valuesord =='D':
+    #print("for diff collection")
+    #testing_possibilities_different_collection()
     #print(skins_price)
-    print("If output skins lack any wear, the calculation will change so double check math yourself!")
-else:
-    print("wrong input!")
+    #print("If output skins lack any wear, the calculation will change so double check math yourself!")
+#else:
+    #print("wrong input!")
