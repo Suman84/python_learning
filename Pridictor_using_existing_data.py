@@ -139,18 +139,27 @@ rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
 rarity_real = ['consumer','milspec','industrial','restricted','classified','covert']
 
 def testing_possibilities_different_collection():
-    total_collection = 10
+    total_collection = 50
+    totalfound = 0
+    maxinput2  = input("enter max input in $(example: 5)")
+    maxinput = float(maxinput2)
+    margin2 = input("enter desired margin(example :20, i.e output are at least 20% more than input on average")
+    margin = 1 + int(margin2)/100
+    print('Testing now!')
+    for l2 in range(0, 68):
+        for k2 in range(0, 5):
+            for i2 in range(0, 5):
+                    count3 = 1
+                    for m2 in range(0, 7):
+                        if skins_price[l2][k2 + 1][m2 + 1][i2] != 0:
+                            count3 = count3 + 1
+                    no_of_skins[l2][k2 + 1] = count3
     for n in range(0,total_collection):
         for m in range(0,total_collection-n):
-            for l in range(1, total_collection-n):
+            for l in range(1, total_collection-n-m):
                 for k in range(0, 5):
                     for j in range(0, 7):
                         for i in range(0, 4):
-                            count2 = 1
-                            for p in range(0, 5):
-                                if skins_price[l][k + 1][p + 1][i] != 0:
-                                    count2 = count2 + 1
-                            no_of_skins[l][k + 1] = count2
                             input1wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i] * 5
                             input2wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i + 1] * 5
                             input3wear = skins_price[m + n][k][j][i+1] * 5 + skins_price[l + m + n][k][j][i] * 5
@@ -170,15 +179,24 @@ def testing_possibilities_different_collection():
                                        skins_price[l + m + n][k + 1][2][i+1] + skins_price[l + m + n][k + 1][3][i+1] +
                                        skins_price[l + m + n][k + 1][4][i+1] + skins_price[l + m + n][k + 1][5][i+1] +
                                        skins_price[l + m + n][k + 1][6][i+1] + skins_price[l + m + n][k + 1][7][i+1])
+                            count3 = 1
+                            for m2 in range(0, 7):
+                                if skins_price[l+m+n][k + 1][m2 + 1][i] != 0:
+                                    count3 = count3 + 1
+                            no_of_skins[l+m+n][k + 1] = count3
 
                             trueoutput = (output1 + output2)/(no_of_skins[m + n][k + 1] + no_of_skins[l +m + n][k + 1])
 
-                            if input1wear < trueoutput and skins_price[m + n][k + 1][0][i] != 0 and skins_price[l+m+n][k + 1][0][i] !=0:
-                                if skins_price[m + n][k][j][i] != 0 and skins_price[l+m+n][k][j][i] != 0: #input
-                                    if input1wear*1 < trueoutput:
-                                        print("\nfound at setname=" + set_name[m+n] +" and " + set_name[l+m+n]+ ". rarity=" + rarity_real[k] + " no=" + str(j+1)
-                                              + " wear=" + wear_name[i] + " value of output-" + str(trueoutput))
-                                        print("\tinput(all same)-" + str(input1wear))
+                            if input1wear*margin < trueoutput and skins_price[m + n][k + 1][0][i] != 0 and skins_price[l+m+n][k + 1][0][i] !=0:
+                                if skins_price[m + n][k][j][i] != 0 and skins_price[l+m+n][k][j][i] != 0 and input1wear < maxinput: #input
+                                    print("\nfound at setname=" + set_name[m+n] +" and " + set_name[l+m+n]+ ". rarity=" + rarity_real[k] + " no=" + str(j+1)
+                                              + " wear=" + wear_name[i] )
+                                    print('Possible number of outputs= ' + str(no_of_skins[m + n][k + 1]) + " + " + str(no_of_skins[l +m + n][k + 1]) + " = " + str(no_of_skins[m + n][k + 1]+no_of_skins[l +m + n][k + 1]))
+                                    print("Total input(wear same):" + str(input1wear))
+                                    print("Avg value of output:" + str(trueoutput))
+                                    print("Average Gain = " + str(input1wear*100/trueoutput) + "%")
+                                    totalfound = totalfound +1
+    print("total found=" + str(totalfound))
 
 
 
@@ -190,6 +208,10 @@ def testing_possibilities_same_collection():
         all_data = all_data + f2
     file2.close()
     #print(all_data)
+    maxinput2 = input("enter max input in $(example: 5)")
+    maxinput = float(maxinput2)
+    margin2 = input("enter desired margin(example :20, i.e output are at least 20% more than input on average")
+    margin = 1 + int(margin2) / 100
     for l in range(0, 68):
         for k in range(0, 5):
             for j in range(0, 7):
@@ -204,9 +226,9 @@ def testing_possibilities_same_collection():
                     output1 = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i] + skins_price[l][k + 1][6][i] + skins_price[l][k + 1][7][i]) /no_of_skins[l][k + 1]
                     output2 = (skins_price[l][k + 1][0][i+1] + skins_price[l][k + 1][1][i+1] + skins_price[l][k + 1][2][i+1] +skins_price[l][k + 1][3][i+1] + skins_price[l][k + 1][4][i+1] + skins_price[l][k + 1][5][i+1] + skins_price[l][k + 1][6][i] + skins_price[l][k + 1][7][i]) / no_of_skins[l][k + 1]
 
-                    if input1wear*1.2 < output1:
+                    if input1wear*margin < output1 and input1wear < maxinput:
                         if skins_price[l][k][j][i] !=0 :
-                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + " value of output:" + str(output1))
+                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + "Avg value of output:" + str(output1))
                             print("\tinput(all same):" + str(input1wear))
                             #print(no_of_skins[l][k + 1])
                             to_be_filtered = "Collection=" + set_name[l] +", Wear=" + wear_name[i] + ", Rarity= " + rarity_real[k] +", SN=" + str(j)
@@ -217,9 +239,9 @@ def testing_possibilities_same_collection():
                                 gun_name1 = all_data[all_data.find('#', index) + 1:all_data.find('$', index) +5]
                                 print( gun_name1 + "x10")
 
-                    if input2wear*1.2 < output2:
+                    if input2wear*margin < output2 and input2wear < maxinput:
                         if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
-                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + " value of output:" + str(output2))
+                            print('\n\nfound at Wear=' + str(wear_name[i]) + ' Rarity= ' + rarity_real[k] + " number=" + str(j) + " set=" + set_name[l] + "Avg value of output:" + str(output2))
                             print("\tinput(2wearmix):" + str(input2wear))
                             #print(no_of_skins[l][k + 1])
                             to_be_filtered1 = "Collection=" + set_name[l] + ", Wear=" + wear_name[i] + ", Rarity= " + \
@@ -238,7 +260,6 @@ def testing_possibilities_same_collection():
                                 gun_name1 = all_data[all_data.find('#', index1) + 1:all_data.find('$', index1) +5]
                                 gun_name2 = all_data[all_data.find('#', index2) + 1:all_data.find('$', index2) +5]
                                 print(gun_name1 +"x5 and "+ gun_name2 + "x5")
-
 
 def get_prices_from_file():
     file2 = open('skin_prices.txt', 'r')
@@ -303,8 +324,19 @@ def get_prices_from_file_new():
                             skins_price[l][k][j][i] = float(all_data[all_data.find('$', index) + 1:all_data.find('$', index) + 7])
     file2.close()
 
-
+print("Extracting prices stored in file....")
 get_prices_from_file_new()
-testing_possibilities_same_collection()
-#testing_possibilities_different_collection()
-print(skins_price)
+valuesord = input("press 's' for same collection input and 'd' for 2 diff collection input:")
+print(valuesord)
+if valuesord == 's' or valuesord == 'S':
+    print("for same collection")
+    testing_possibilities_same_collection()
+    #print(skins_price)
+    print("If output skins lack any wear, the calculation will change so double check math yourself!")
+elif valuesord == 'd' or valuesord =='D':
+    print("for diff collection")
+    testing_possibilities_different_collection()
+    #print(skins_price)
+    print("If output skins lack any wear, the calculation will change so double check math yourself!")
+else:
+    print("wrong input!")

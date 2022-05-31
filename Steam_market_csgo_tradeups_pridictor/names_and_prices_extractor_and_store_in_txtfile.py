@@ -133,12 +133,12 @@ exterior = 'normal'
 rarity = ['Common', 'Uncommon', 'Rare', 'Mythical', 'Legendary', 'Ancient']
 rarity_real = ['consumer','milspec','industrial','restricted','classified','covert']
 
-
 def extract_values():
     file = open('skin_prices.txt', 'a+')
-    for k in range(0, 70):
-        for j in range(0, 5):
-            for i in range(0, 6):
+    for k in range(0, 68):
+        print("collection = "+set_name[k])
+        for j in range(0, 5): #number of wear
+            for i in range(0, 6): #rarity
                 link = 'https://steamcommunity.com/market/search?q=&category_730_ItemSet%5B%5D=' \
                        'tag_set_' + set_name[k] + '&category_730_ProPlayer%5B%5D=any&category_730_StickerCapsule%5B%5D=any&category_730_TournamentTeam%5B%5D=' \
                                 'any&category_730_Weapon%5B%5D=any&category_730_Exterior%5B%5D=' \
@@ -150,7 +150,7 @@ def extract_values():
                 html_text = requests.get(link, headers= headers).text
                 soup = BeautifulSoup(html_text, 'html.parser')
                 items = soup.find_all('div',class_="market_listing_row market_recent_listing_row market_listing_searchresult")
-                counter = -1
+                counter = -1 #
                 for item in items:
                     item_name = item.find('span', class_='market_listing_item_name').text.replace(" ", "_").replace("龍王","").replace('弐','')
                     item_price = item.find('span', class_='sale_price').text.replace(",", "")
@@ -168,78 +168,12 @@ def extract_values():
                     else:
                         item_priceinfloat = item_price[1:8]
                     skins_price[k][i][counter][j] = float(item_priceinfloat)
-                    #print('set-name=' + set_name[k])
-                    #print('counter=' + str(counter) + 'and i=' + str(i))
-                    #print(skins_price)
                     print(item_priceinfloat)
-                    #file = open('skin_prices.txt', 'a+')
                     file.write("Collection=" + set_name[k] +", Wear=" + wear_name[j] + ", Rarity= " + rarity_real[i] +", SN=" + str(counter) +"\t#")
                     file.write(item_name +' = '+item_price + "\n")
-                print('waiting for 15 sec so that steam wont ban')
+                print('waiting for 15 sec so that steam wont DoS')
                 time.sleep(15)
     file.close()
 
-def testing_possibilities_same_collection():
-    for l in range(0, 68):
-        for k in range(0, 5):
-            for j in range(0, 6):
-                for i in range(0, 4):
-                    count2 = 1
-                    for m in range(0,5):
-                        if skins_price[l][k + 1][m+1][i] != 0:
-                            count2 = count2 +1
-                    no_of_skins[l][k + 1] = count2
-                    input1wear = skins_price[l][k][j][i]*10
-                    input2wear = skins_price[l][k][j][i]*5 + skins_price[l][k][j][i+1]*5
-                    output = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] + skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] + skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) /no_of_skins[l][k + 1]
-
-                    if input1wear < output:
-                        if skins_price[l][k][j][i] !=0 :
-                            print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-" + str(output))
-                            print("\ninput(all same)-" + str(input1wear))
-                            #print(no_of_skins[l][k + 1])
-                    if input2wear < output:
-                        if skins_price[l][k][j][i] !=0 and skins_price[l][k][j][i+1] !=0:
-                            print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(i) + " value of output-" + str(output))
-                            print("\ninput(2wearmix)-" + str(input2wear))
-                            #print(no_of_skins[l][k + 1])
-
-
-def testing_possibilities_different_collection():
-    for n in range(0,68):
-        for m in range(0,68-n):
-            for l in range(1, 68):
-                for k in range(0, 5):
-                    for j in range(0, 6):
-                        for i in range(0, 4):
-                            count2 = 1
-                            for p in range(0, 5):
-                                if skins_price[l][k + 1][p + 1][i] != 0:
-                                    count2 = count2 + 1
-                            no_of_skins[l][k + 1] = count2
-                            input1wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i] * 5
-                            input2wear = skins_price[m+n][k][j][i] * 5 + skins_price[l+m+n][k][j][i + 1] * 5
-                            input3wear = skins_price[m + n][k][j][i+1] * 5 + skins_price[l + m + n][k][j][i] * 5
-                            output = (skins_price[l][k + 1][0][i] + skins_price[l][k + 1][1][i] +
-                                      skins_price[l][k + 1][2][i] + skins_price[l][k + 1][3][i] +
-                                      skins_price[l][k + 1][4][i] + skins_price[l][k + 1][5][i]) / no_of_skins[l][k + 1]
-
-                            if input1wear < output:
-                                if skins_price[l][k][j][i] != 0 and skins_price[l][k][j][i + 1] != 0:
-                                    print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(
-                                        i) + " value of output-" + str(output))
-                                    print("\ninput(all same)-" + str(input1wear))
-                                    # print(no_of_skins[l][k + 1])
-                            if input2wear < output:
-                                if skins_price[l][k][j][i] != 0 and skins_price[l][k][j][i + 1] != 0:
-                                    print("found at l=" + str(l) + " k=" + str(k) + " j=" + str(j) + " i=" + str(
-                                        i) + " value of output-" + str(output))
-                                    print("\ninput(2wearmix)-" + str(input2wear))
-                                    # print(no_of_skins[l][k + 1])
-
-
 extract_values()
-#testing_possibilities_same_collection()
-print("final value =")
-print(skins_price)
-print(no_of_skins)
+print("Completed!")

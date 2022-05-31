@@ -1,0 +1,5 @@
+Collection=inferno, Wear=BS, Rarity= consumer, SN=0	#Nova_|_Walnut_(Battle-Scarred) = $0.70 USD
+Collection=inferno, Wear=BS, Rarity= consumer, SN=1	#MAG-7_|_Sand_Dune_(Battle-Scarred) = $0.69 USD
+Collection=inferno, Wear=BS, Rarity= milspec, SN=0	#M4A4_|_Tornado_(Battle-Scarred) = $1.19 USD
+Collection=inferno, Wear=BS, Rarity= milspec, SN=1	#P250_|_Gunsmoke_(Battle-Scarred) = $0.70 USD
+Collection=inferno, Wear=BS, Rarity= industrial, SN=0	#Tec-9_|_Brass_(Battle-Scarred) = $0.48 USD
