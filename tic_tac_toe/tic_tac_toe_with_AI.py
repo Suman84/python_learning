@@ -221,6 +221,7 @@ def b_click(b):
 
 
 reset()
+#Create menu
 my_menu = Menu(root)
 root.config(menu=my_menu)
 
